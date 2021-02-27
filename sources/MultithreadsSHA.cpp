@@ -94,9 +94,9 @@ void MultithreadsSHA::start() {
 
 void MultithreadsSHA::init() {
     logging::add_console_log(std::cout,
-                             keywords::format = "[%TimeStamp%] [%Severity%] %Message%",
-                             keywords::auto_flush = true,
-                             keywords::filter = logging::trivial::severity
+             keywords::format = "[%TimeStamp%] [%Severity%] %Message%",
+             keywords::auto_flush = true,
+             keywords::filter = logging::trivial::severity
                                      == logging::trivial::info);
 
     typedef sinks::synchronous_sink<sinks::text_file_backend> file_sink;
@@ -106,10 +106,10 @@ void MultithreadsSHA::init() {
             keywords::auto_flush = true));
 
     sink->set_formatter(expr::stream
-                                << "["
-                                << expr::attr<boost::posix_time::ptime>("TimeStamp")
-                                << "] [" << logging::trivial::severity << "] "
-                                << expr::smessage);
+            << "["
+            << expr::attr<boost::posix_time::ptime>("TimeStamp")
+            << "] [" << logging::trivial::severity << "] "
+            << expr::smessage);
 
     logging::core::get()->add_sink(sink);
     logging::add_common_attributes();
