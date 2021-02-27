@@ -1,6 +1,6 @@
 //
 // Created by hacker on 04.02.2021.
-//
+// Copyright [2021] <pan-fera>
 
 #include "MultithreadsSHA.hpp"
 
@@ -38,7 +38,7 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-    while(true) {
+    while (true) {
         int milli_seconds = 0;
         auto start = std::chrono::high_resolution_clock::now();
         do {
@@ -53,12 +53,13 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
             hash = picosha2::hash256_hex_string(data_vector);
 
             BOOST_LOG_TRIVIAL(trace) << " data: " << hex_number
-                                     << " hash: " << hash << " id: " <<  std::this_thread::get_id();
+                                     << " hash: " << hash << " id: "
+                                     <<  std::this_thread::get_id();
         } while (hash.substr(60) != "0000");
         auto end = std::chrono::high_resolution_clock::now();
         milli_seconds +=
-                std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
-                        .count();
+                std::chrono::duration_cast<std::chrono::milliseconds>
+                (end - start).count();
         BOOST_LOG_TRIVIAL(info)<< " data: " << hex_number
                                << " hash: " << hash << " id: "
                                <<  std::this_thread::get_id();
@@ -72,7 +73,6 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
         };
         result.push_back(make_object());
     }
-
 }
 
 void MultithreadsSHA::start() {
@@ -90,14 +90,14 @@ void MultithreadsSHA::start() {
     for (std::thread& _th : th) {
         _th.join();
     }
-
 }
 
 void MultithreadsSHA::init() {
     logging::add_console_log(std::cout,
                              keywords::format = "[%TimeStamp%] [%Severity%] %Message%",
                              keywords::auto_flush = true,
-                             keywords::filter = logging::trivial::severity == logging::trivial::info);
+                             keywords::filter = logging::trivial::severity
+                                     == logging::trivial::info);
 
     typedef sinks::synchronous_sink<sinks::text_file_backend> file_sink;
     boost::shared_ptr<file_sink> sink(new file_sink(
@@ -106,7 +106,8 @@ void MultithreadsSHA::init() {
             keywords::auto_flush = true));
 
     sink->set_formatter(expr::stream
-                                << "[" << expr::attr<boost::posix_time::ptime>("TimeStamp")
+                                << "["
+                                << expr::attr<boost::posix_time::ptime>("TimeStamp")
                                 << "] [" << logging::trivial::severity << "] "
                                 << expr::smessage);
 

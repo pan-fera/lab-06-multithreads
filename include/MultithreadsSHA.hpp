@@ -2,7 +2,6 @@
 // Created by hacker on 04.02.2021.
 // Copyright [2021] <pan-fera>
 #include <iostream>
-#include <vector>
 #include "picosha2.h"
 #include <cstdlib>
 #include <ctime>
@@ -27,14 +26,13 @@
 #include <boost/log/sources/record_ostream.hpp>
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/log/expressions/keyword.hpp>
-#include <boost/log/trivial.hpp>
 #include <algorithm>
 #include <chrono>
 #include <nlohmann/json.hpp>
 #include <mutex>
 
-#ifndef TEMPLATE_MULTITHREADSSHA_HPP_
-#define TEMPLATE_MULTITHREADSSHA_HPP_
+#ifndef INCLUDE_MULTITHREADSSHA_HPP_
+#define INCLUDE_MULTITHREADSSHA_HPP_
 
 class MultithreadsSHA {
 public:
@@ -51,4 +49,4 @@ private:
     unsigned int _count;
 };
 
-#endif  // TEMPLATE_MULTITHREADSSHA_HPP_
+#endif  // INCLUDE_MULTITHREADSSHA_HPP_
