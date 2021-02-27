@@ -36,17 +36,18 @@
 #define TEMPLATE_MULTITHREADSSHA_HPP
 
 class MultithreadsSHA {
- public:
-  MultithreadsSHA();
-  MultithreadsSHA(unsigned int count);
-  MultithreadsSHA(unsigned int count, std::string filename);
-  [[noreturn]] static void find_hash();
-  static void init();
-  void start();
-  static void ex([[maybe_unused]] int sig_num);
-  static void write_json();
- private:
-  unsigned int _count;
+public:
+    MultithreadsSHA();
+    explicit MultithreadsSHA(unsigned int count);
+    MultithreadsSHA(unsigned int count, std::string filename);
+    [[noreturn]] inline static void find_hash();
+    static void init();
+    void start();
+    static void ex([[maybe_unused]] int sig_num);
+    static void write_json();
+    inline static std::string _filename;
+private:
+    unsigned int _count;
 };
 
 #endif  // TEMPLATE_MULTITHREADSSHA_HPP

@@ -11,15 +11,12 @@ namespace sinks = boost::log::sinks;
 namespace expr = boost::log::expressions;
 namespace keywords = boost::log::keywords;
 
-//std::atomic<bool> state = true;
-
 std::mutex mutex;
 static auto result = nlohmann::json::array();
 
-std::string _filename;
 
 MultithreadsSHA::MultithreadsSHA():_count(std::thread::hardware_concurrency()){
-    _filename = "";
+    _filename =  "";
 }
 
 MultithreadsSHA::MultithreadsSHA(unsigned int count){
@@ -38,7 +35,6 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
     std::string hash;
     int number;
     std::string hex_number;
-    nlohmann::json j;
 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
@@ -48,7 +44,6 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
         do {
             number = std::rand();
             std::stringstream stream;
-
             stream << std::hex << number;
             hex_number = stream.str();
 
@@ -83,8 +78,6 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
 void MultithreadsSHA::start() {
     std::vector<std::thread> th;
     signal(SIGTERM, ex);
-    signal(SIGKILL, ex);
-    signal(SIGABRT, ex);
     signal(SIGINT, ex);
 
     init();
@@ -110,8 +103,6 @@ void MultithreadsSHA::init() {
     boost::shared_ptr<file_sink> sink(new file_sink(
             keywords::file_name = "./logs/file_%5N.log",
             keywords::rotation_size = 5 * 1024 * 1024,
-            keywords::time_based_rotation =
-                    sinks::file::rotation_at_time_point(12, 0, 0),
             keywords::auto_flush = true));
 
     sink->set_formatter(expr::stream
@@ -125,14 +116,15 @@ void MultithreadsSHA::init() {
 
 void MultithreadsSHA::ex([[maybe_unused]] int sig_num) {
     mutex.lock();
-
     write_json();
     exit(sig_num);
 }
 
 void MultithreadsSHA::write_json() {
-    std::ofstream file;
-    file.open(_filename + ".json");
-    file << result.dump(4);
-    file.close();
+    if (!_filename.empty()) {
+        std::ofstream file;
+        file.open(_filename + ".json");
+        file << result.dump(4);
+        file.close();
+    }
 }
