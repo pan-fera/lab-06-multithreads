@@ -1,6 +1,6 @@
 //
 // Created by hacker on 04.02.2021.
-//
+// Copyright [2021] <pan-fera>
 #include <iostream>
 #include <vector>
 #include "picosha2.h"
@@ -33,8 +33,8 @@
 #include <nlohmann/json.hpp>
 #include <mutex>
 
-#ifndef TEMPLATE_MULTITHREADSSHA_HPP
-#define TEMPLATE_MULTITHREADSSHA_HPP
+#ifndef TEMPLATE_MULTITHREADSSHA_HPP_
+#define TEMPLATE_MULTITHREADSSHA_HPP_
 
 class MultithreadsSHA {
 public:
@@ -51,4 +51,4 @@ private:
     unsigned int _count;
 };
 
-#endif  // TEMPLATE_MULTITHREADSSHA_HPP
+#endif  // TEMPLATE_MULTITHREADSSHA_HPP_
