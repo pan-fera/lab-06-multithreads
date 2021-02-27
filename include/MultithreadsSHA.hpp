@@ -2,14 +2,13 @@
 // Created by hacker on 04.02.2021.
 // Copyright [2021] <pan-fera>
 #include <iostream>
-#include "picosha2.h"
+#include "PicoSHA2/picosha2.h"
 #include <cstdlib>
 #include <ctime>
 #include <thread>
 #include <vector>
 #include <cstdio>
 #include <csignal>
-#include <cctype>
 
 #include <string>
 #include <boost/smart_ptr/shared_ptr.hpp>
