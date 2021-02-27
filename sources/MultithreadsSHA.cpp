@@ -11,8 +11,8 @@ namespace sinks = boost::log::sinks;
 namespace expr = boost::log::expressions;
 namespace keywords = boost::log::keywords;
 
-std::atomic<bool> state = true;
-//std::mutex mutex;
+//std::atomic<bool> state = true;
+std::mutex mutex;
 
 std::vector<nlohmann::json> values;
 std::string _filename;
@@ -33,7 +33,7 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
   _filename = filename;
 }
 
-void MultithreadsSHA::find_hash() {
+[[noreturn]] void MultithreadsSHA::find_hash() {
   std::string hash;
   int number;
   std::string hex_number;
@@ -42,7 +42,7 @@ void MultithreadsSHA::find_hash() {
   std::srand(static_cast<unsigned int>(std::time(nullptr)));
   src::severity_logger<logging::trivial::severity_level> slg;
 
-  while(state) {
+  while(true) {
     int milli_seconds = 0;
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -135,8 +135,8 @@ void MultithreadsSHA::init() {
 }
 
 void MultithreadsSHA::ex([[maybe_unused]] int sig_num) {
-  // mutex.lock();
-  state = false;
+   mutex.lock();
+ // state = false;
   //logging::core::get()->flush();
   // logging::core::get()->remove_all_sinks();
 

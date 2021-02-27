@@ -54,7 +54,7 @@ class MultithreadsSHA {
   MultithreadsSHA();
   MultithreadsSHA(unsigned int count);
   MultithreadsSHA(unsigned int count, std::string filename);
-  static void find_hash();
+  [[noreturn]] static void find_hash();
   static void init();
   void start();
   static void ex([[maybe_unused]] int sig_num);
