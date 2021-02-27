@@ -29,9 +29,19 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+hunter_add_package(Boost COMPONENTS filesystem log system thread)
+find_package(Boost CONFIG REQUIRED filesystem log log_setup system thread)
+
+hunter_add_package(Boost COMPONENTS log thread system)
+find_package(Boost CONFIG REQUIRED log thread system)
+
+
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 add_library(${PROJECT_NAME} STATIC
   # enum your files and delete this comment
-  ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MultithreadsSHA.cpp
 )
 
 add_executable(demo
@@ -41,6 +51,18 @@ add_executable(demo
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>"
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third-party/PicoSHA2>"
+        "$<INSTALL_INTERFACE:include>"
+)
+
+target_link_libraries(
+        ${PROJECT_NAME}
+        Boost::log_setup
+        Boost::log
+        Boost::thread
+        Boost::filesystem
+        Boost::system
+        nlohmann_json::nlohmann_json
 )
 
 target_link_libraries(demo ${PROJECT_NAME})
