@@ -12,7 +12,7 @@ namespace expr = boost::log::expressions;
 namespace keywords = boost::log::keywords;
 
 std::mutex mutex;
-static auto result = nlohmann::json::array();
+auto result = nlohmann::json::array();
 
 
 MultithreadsSHA::MultithreadsSHA():_count(std::thread::hardware_concurrency()){
