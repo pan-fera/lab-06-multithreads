@@ -10,6 +10,7 @@
 #include <vector>
 #include <cstdio>
 #include <csignal>
+#include <cctype>
 
 #include <string>
 #include <boost/smart_ptr/shared_ptr.hpp>
@@ -40,11 +41,11 @@ public:
     MultithreadsSHA();
     explicit MultithreadsSHA(unsigned int count);
     MultithreadsSHA(unsigned int count, std::string filename);
-    [[noreturn]] inline static void find_hash();
+    [[noreturn]] static void find_hash();
     static void init();
     void start();
-    static void ex([[maybe_unused]] int sig_num);
-    static void write_json();
+    inline static void ex([[maybe_unused]] int sig_num);
+    inline static void write_json();
     inline static std::string _filename;
 private:
     unsigned int _count;
