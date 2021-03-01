@@ -25,6 +25,7 @@
 #include <boost/log/sources/record_ostream.hpp>
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/log/expressions/keyword.hpp>
+
 #include <algorithm>
 #include <chrono>
 #include <nlohmann/json.hpp>

@@ -14,7 +14,6 @@ namespace keywords = boost::log::keywords;
 std::mutex mutex;
 auto result = nlohmann::json::array();
 
-
 MultithreadsSHA::MultithreadsSHA():_count(std::thread::hardware_concurrency()){
     _filename =  "";
 }
@@ -71,7 +70,9 @@ MultithreadsSHA::MultithreadsSHA(unsigned int count, std::string filename){
             js["data"] = hex_number;
             return js;
         };
+        mutex.lock();
         result.push_back(make_object());
+        mutex.unlock();
     }
 }
 
